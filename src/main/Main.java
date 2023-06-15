@@ -1,5 +1,6 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -11,9 +12,16 @@ import obj.ProdutoGeral;
 public class Main {
 	static Scanner sc = new Scanner(System.in);
 	static int opcao;
+	static ArrayList<Produto> lista = new ArrayList<Produto>();
 	
 	public static void main(String[] args) {
 		while (true) {
+//			Produto a = new ProdutoGeral("TESOURA",20,"2023-20-12",15,"565656565");
+//			lista.add(a);
+//			Produto b = new ProdutoGeral("PAPEL",10,"2023-12-20",5,"54544");
+//			lista.add(b);
+//			Produto c = new Medicamento("AMOXILINA", 15,"2023-12-01",2,"565656","BACTERIA");
+//			lista.add(c);
 			opcao = menu();
 			
 			switch(opcao) {
@@ -45,8 +53,35 @@ public class Main {
 	}
 	
 
-	private static void vender(){
-		// TODO Auto-generated method stub
+	private static void vender(){		
+		if (lista.isEmpty()) {
+			System.out.println("NÃO HÁ NENHUM PRODUTO CADASTRADO!");
+			return;
+		}
+		
+		System.out.println("DIGITE O PRODUTO: ");
+		String produto = sc.next().toUpperCase();
+		
+		boolean encontrado = false;
+		for (Produto p: lista) {
+			if (p.getNome().equals(produto)) {
+				encontrado = true;
+				System.out.println("DIGITE A QUANTIDADE: ");
+				int qtd = sc.nextInt();
+				
+				if (p.getQuantidade() < qtd) {
+					System.out.println("QUANTIDADE INSUFICIENTE!\nESTOQUE ATUAL DE " + p.getNome() + " = " + p.getQuantidade() + " UNIDADES");
+					return;
+				} else {
+					p.setQuantidade(p.getQuantidade()-qtd);
+					System.out.println("VENDA CADASTRADA!");
+					return;
+				}
+			}
+		}
+		if (!encontrado) {
+			System.out.println("PRODUTO NÃO ENCONTRADO!");
+		}
 		
 	}
 
@@ -68,25 +103,33 @@ public class Main {
 			System.out.println("SIGA AS INSTRUÇÕES REFERENTE AO TIPO DE CADASTRO:\nDIGITE 1 - PARA PRODUTO\nDIGITE 2 - PARA MEDICAMENTO");
 			String ask = sc.next();
 			
-			if (ask.equals('1')) {
+			if (ask.equals("1")) {
 				Produto produto = new ProdutoGeral(nome,preco,data,qtdProduto,codBarra);
+				lista.add(produto);
 				System.out.println("PRODUTO CADASTRADO!");
 				break;
-			} else  if (ask.equals('2')){
-				System.out.println("SIGA AS INSTRUÇÕES REFERENTE AO TIPO DE MEDICAMENTO:\\nDIGITE 1 - MEDICAMENTO SEM RECEITA\\nDIGITE 2 - MEDICAMENTO COM RECEITA");
+			} else  if (ask.equals("2")){
+				System.out.println("PRINCÍPIO ATIVO DO REMÉDIO: ");
+				String principio = sc.next().toUpperCase();
+				
+				System.out.println("SIGA AS INSTRUÇÕES REFERENTE AO TIPO DE MEDICAMENTO:\nDIGITE 1 - MEDICAMENTO SEM RECEITA\nDIGITE 2 - MEDICAMENTO COM RECEITA");
 				String resposta = sc.next();
-				if (resposta.equals("1")) {
-					Produto remedio = new Medicamento(nome,preco,data,qtdProduto,codBarra);
-					System.out.println("MEDICAMENTO CADASTRADO!");
-					break;
-				} else if (resposta.equals("2")) {
-					System.out.println("DIGITE A RECEITA: ");
-					String receita = sc.next().toUpperCase();				
-					Produto remedio2 = new MedicamentoReceita(nome,preco,data,qtdProduto,codBarra,receita);
-					System.out.println("MEDICAMENTO CADASTRADO!");
-					break;
-				} else if ((!resposta.equals("1")) && (!resposta.equals("2"))) {
-					System.out.println("\nENTRADA INVÁLIDA. DIGITE APENAS 1 OU 2.");
+				while (true) {
+					if (resposta.equals("1")) {
+						Produto remedio = new Medicamento(nome,preco,data,qtdProduto,codBarra,principio);
+						lista.add(remedio);
+						System.out.println("MEDICAMENTO CADASTRADO!");
+						return;
+					} else if (resposta.equals("2")) {
+						System.out.println("DIGITE A RECEITA: ");
+						String receita = sc.next().toUpperCase();				
+						Produto remedio2 = new MedicamentoReceita(nome,preco,data,qtdProduto,codBarra,principio,receita);
+						lista.add(remedio2);
+						System.out.println("MEDICAMENTO CADASTRADO!");
+						return;
+					} else if ((!resposta.equals("1")) && (!resposta.equals("2"))) {
+						System.out.println("\nENTRADA INVÁLIDA. DIGITE APENAS 1 OU 2.");
+					}
 				}
 			} else if ((!ask.equals("1")) && (!ask.equals("2"))) {
 				System.out.println("\nENTRADA INVÁLIDA. DIGITE APENAS 1 OU 2.");
@@ -106,8 +149,15 @@ public class Main {
 	}
 
 	private static void listarTodos(){
-		// TODO Auto-generated method stub
-		
+		if (lista.isEmpty()) {
+			System.out.println("NÃO HÁ NENHUM PRODUTO CADASTRADO!");
+			return;
+		}
+		for (Produto p: lista) {
+			System.out.println("ID: " + p.getId() + " | NOME: " + p.getNome() + " | PREÇO: " + p.getPreco());
+			System.out.println("DATA DE VALIDADE: " + p.getValidade() + " | QUANTIDADES DISPONIVEIS: " + p.getQuantidade());
+			System.out.println();
+		}
 	}
 	
 
@@ -117,7 +167,7 @@ public class Main {
 	}
 
 	public static int menu() {
-		System.out.println("=======BEM-VINDO=======");
+		System.out.println("\n=======BEM-VINDO=======");
 		System.out.println("==SELECIONE UMA OPÇÃO==");
 		System.out.println("1 - VENDER PRODUTO");
 		System.out.println("2 - CADASTRAR PRODUTO");

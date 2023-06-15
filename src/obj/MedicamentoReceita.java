@@ -7,8 +7,8 @@ public class MedicamentoReceita extends Medicamento{
 		super();
 	}
 
-	public MedicamentoReceita(String nome, double preco, String validade, int quantidade, String codigoDeBarras, String receita) {
-		super(nome, preco, validade, quantidade, codigoDeBarras);
+	public MedicamentoReceita(String nome, double preco, String validade, int quantidade, String codigoDeBarras, String principio_ativo,String receita) {
+		super(nome, preco, validade, quantidade, codigoDeBarras,principio_ativo);
 		this.receita = receita;
 	}
 

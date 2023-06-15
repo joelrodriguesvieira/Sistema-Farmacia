@@ -1,7 +1,9 @@
 package obj;
 
 public abstract class Produto {
-	private static int id;
+	private static int contador = 1;
+	
+	private int id;
 	private String nome;
     private double preco;
     private String validade;
@@ -18,11 +20,12 @@ public abstract class Produto {
 		this.validade = validade;
 		this.quantidade = quantidade;
 		this.codigoDeBarras = codigoDeBarras;
-		this.id++;
+		this.id = contador;
+    	contador++;
 	}
 	
 
-	public static int getId() {
+	public int getId() {
 		return id;
 	}
 
