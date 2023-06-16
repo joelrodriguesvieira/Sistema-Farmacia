@@ -1,6 +1,6 @@
 package obj;
 
-public abstract class Produto {
+public abstract class Produto implements Negocios {
 	private static int contador = 1;
 	
 	private int id;
@@ -59,6 +59,14 @@ public abstract class Produto {
 	public void setCodigoDeBarras(String codigoDeBarras) {
 		this.codigoDeBarras = codigoDeBarras;
 	}
-
-    
+	
+	public String exibirInformacoes() {
+		return "=== PRODUTO ===" +
+		"\nID: " + getId() +
+		"\nNOME: " + getNome() +
+		"\nPREÇO: R$  " + getPreco() +
+		"\nVALIDADE: " + getValidade() +
+		"\nQUANTIDADE: " + getQuantidade() +
+		"\nCÓDIGO: " + getCodigoDeBarras();
+	}
 }

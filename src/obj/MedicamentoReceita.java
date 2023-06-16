@@ -1,6 +1,6 @@
 package obj;
 
-public class MedicamentoReceita extends Medicamento{
+public class MedicamentoReceita extends Medicamento implements Negocios{
 	private String receita;
 
 	public MedicamentoReceita() {
@@ -14,6 +14,18 @@ public class MedicamentoReceita extends Medicamento{
 
 	public String getReceita() {
 		return receita;
+	}
+	
+	public String exibirInformacoes() {
+		return "=== MEDICAMENTO COM RECEITA ===" +
+		"\nID: " + getId() +
+		"\nNOME: " + getNome() +
+		"\nPREÇO: R$  " + getPreco() +
+		"\nVALIDADE: " + getValidade() +
+		"\nPRINCIPIO ATIVO: " + getPrincipio_ativo() +
+		"\nRECEITA: " + getReceita() +
+		"\nQUANTIDADE: " + getQuantidade() +
+		"\nCÓDIGO: " + getCodigoDeBarras();
 	}
 	
 }

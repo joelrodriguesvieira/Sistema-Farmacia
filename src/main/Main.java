@@ -154,9 +154,7 @@ public class Main {
 			return;
 		}
 		for (Produto p: lista) {
-			System.out.println("ID: " + p.getId() + " | NOME: " + p.getNome() + " | PREÇO: " + p.getPreco());
-			System.out.println("DATA DE VALIDADE: " + p.getValidade() + " | QUANTIDADES DISPONIVEIS: " + p.getQuantidade());
-			System.out.println();
+			System.out.println(p.exibirInformacoes()); 
 		}
 	}
 	

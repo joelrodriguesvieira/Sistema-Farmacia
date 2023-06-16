@@ -9,5 +9,7 @@ public class ProdutoGeral extends Produto{
 	public ProdutoGeral() {
 		super();
 	}
+	
+
 
 }
