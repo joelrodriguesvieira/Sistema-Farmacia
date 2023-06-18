@@ -13,6 +13,8 @@ public class Main {
 	static Scanner sc = new Scanner(System.in);
 	static int opcao;
 	static ArrayList<Produto> lista = new ArrayList<Produto>();
+	static double faturamento;
+	static String itensVendidos;
 	
 	public static void main(String[] args) {
 		while (true) {
@@ -74,6 +76,9 @@ public class Main {
 					return;
 				} else {
 					p.setQuantidade(p.getQuantidade()-qtd);
+					itensVendidos += "\nNOME: " + p.getNome() + "\nQUANTIDADE: " + qtd + 
+							"\nVALOR: " + p.getPreco()*qtd; 
+					faturamento += p.getPreco()*qtd;
 					System.out.println("VENDA CADASTRADA!");
 					return;
 				}
@@ -160,7 +165,9 @@ public class Main {
 	
 
 	private static void faturamento(){
-		// TODO Auto-generated method stub
+		System.out.println("=== ITENS VENDIDOS ===");
+		System.out.println(itensVendidos);
+		System.out.println("FATURAMENTO:  R$ " + faturamento);
 		
 	}
 
