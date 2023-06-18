@@ -14,7 +14,7 @@ public class Main {
 	static int opcao;
 	static ArrayList<Produto> lista = new ArrayList<Produto>();
 	static double faturamento;
-	static String itensVendidos;
+	static String itensVendidos = "";
 	
 	public static void main(String[] args) {
 		Produto a = new ProdutoGeral("TESOURA",20,"2023-20-12",15,"121212");
@@ -221,10 +221,13 @@ public class Main {
 	
 
 	private static void faturamento(){
-		System.out.println("=== ITENS VENDIDOS ===");
-		System.out.println(itensVendidos);
-		System.out.println("FATURAMENTO:  R$ " + faturamento);
-		
+		if(itensVendidos.equals("")) {
+			System.out.println("NENHUM PRODUTO FOI VENDIDO AINDA!");
+		} else {
+			System.out.println("=== ITENS VENDIDOS ===");
+			System.out.println(itensVendidos);
+			System.out.println("FATURAMENTO:  R$ " + faturamento);
+		}
 	}
 
 	public static int menu() {
