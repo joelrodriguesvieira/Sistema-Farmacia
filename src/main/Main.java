@@ -34,15 +34,12 @@ public class Main {
 				cadastrar();
 				break;
 			case 3:
-				remover();
-				break;
-			case 4:
 				adicionarQtd();
 				break;
-			case 5:
+			case 4:
 				listarTodos();
 				break;
-			case 6:
+			case 5:
 				faturamento();
 				break;
 			case 0:
@@ -78,10 +75,16 @@ public class Main {
 					return;
 				} else {
 					p.setQuantidade(p.getQuantidade()-qtd);
+					
 					itensVendidos += "\nNOME: " + p.getNome() + "\nQUANTIDADE: " + qtd + 
-							"\nVALOR: " + p.getPreco()*qtd; 
+							"\nVALOR: R$ " + p.getPreco()*qtd; 
 					faturamento += p.getPreco()*qtd;
 					System.out.println("VENDA CADASTRADA!");
+					if(p.getQuantidade()==0) {
+						lista.remove(p);
+						System.out.println("O ESTOQUE DESTE PRODUTO CHEGOU A ZERO!");
+						System.out.println("REMOVENDO PRODUTO DO SISTEMA...");
+					}
 					return;
 				}
 			}
@@ -176,11 +179,6 @@ public class Main {
 		}
 		return false;
 	}
-
-	private static void remover(){
-		// TODO Auto-generated method stub
-		
-	}
 	
 	private static void adicionarQtd() {
 		System.out.println("DIGITE O CODIGO DE BARRA: ");
@@ -234,10 +232,9 @@ public class Main {
 		System.out.println("==SELECIONE UMA OPÇÃO==");
 		System.out.println("1 - VENDER PRODUTO");
 		System.out.println("2 - CADASTRAR PRODUTO");
-		System.out.println("3 - REMOVER PRODUTO");
-		System.out.println("4 - ADICIONAR QUANTIDADES");
-		System.out.println("5 - LISTAR TODOS OS PRODUTOS");
-		System.out.println("6 - FATURAMENTO");
+		System.out.println("3 - ADICIONAR QUANTIDADES");
+		System.out.println("4 - LISTAR TODOS OS PRODUTOS");
+		System.out.println("5 - FATURAMENTO");
 		System.out.println("0 - SAIR");
 		
 		boolean inputValido = false;
