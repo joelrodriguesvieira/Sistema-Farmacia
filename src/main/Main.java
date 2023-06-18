@@ -17,9 +17,9 @@ public class Main {
 	static String itensVendidos;
 	
 	public static void main(String[] args) {
+		Produto a = new ProdutoGeral("TESOURA",20,"2023-20-12",15,"121212");
+		lista.add(a);
 		while (true) {
-//			Produto a = new ProdutoGeral("TESOURA",20,"2023-20-12",15,"565656565");
-//			lista.add(a);
 //			Produto b = new ProdutoGeral("PAPEL",10,"2023-12-20",5,"54544");
 //			lista.add(b);
 //			Produto c = new Medicamento("AMOXILINA", 15,"2023-12-01",2,"565656","BACTERIA");
@@ -61,12 +61,14 @@ public class Main {
 			return;
 		}
 		
-		System.out.println("DIGITE O PRODUTO: ");
-		String produto = sc.next().toUpperCase();
+		System.out.println("DIGITE O CODIGO DE BARRA: ");
+		String codBarra = sc.next().toUpperCase();
 		
-		boolean encontrado = false;
-		for (Produto p: lista) {
-			if (p.getNome().equals(produto)) {
+		boolean encontrado = procurarCodBarra(codBarra);
+		if (encontrado) {
+			for (Produto p: lista) {
+				if (p.getCodigoDeBarras().equals(codBarra)) {				
+				System.out.println("PRODUTO: " + p.getNome());
 				encontrado = true;
 				System.out.println("DIGITE A QUANTIDADE: ");
 				int qtd = sc.nextInt();
@@ -83,7 +85,9 @@ public class Main {
 					return;
 				}
 			}
+			}
 		}
+		
 		if (!encontrado) {
 			System.out.println("PRODUTO NÃO ENCONTRADO!");
 		}
@@ -91,6 +95,27 @@ public class Main {
 	}
 
 	private static void cadastrar(){
+		System.out.println("CÓDIGO DE BARRA: ");
+		String codBarra = sc.next().toUpperCase();
+		boolean encontrado = procurarCodBarra(codBarra);
+		
+		if (encontrado) {
+			System.out.println("ESTE PRODUTO JÁ FOI CADASTRADO ANTERIOMENTE!");
+			while (true) {
+				System.out.println("DESEJA ADICIONAR APENAS ADICIONAR QUANTIDADES A ELE?\nDIGITE 1 PARA SIM\nDIGITE 2 PARA NÃO");
+				String resposta = sc.next();
+				if (resposta.equals("1")) {
+					adicionarQtd();
+					return;
+				} else if (resposta.equals("2")){
+					System.out.println("ENCERRANDO CADASTRO!...");
+					return;
+				} else if ((!resposta.equals("1") && (!resposta.equals("2")))) {
+					System.out.println("\nENTRADA INVÁLIDA. DIGITE APENAS 1 OU 2.");
+				}
+			}
+			
+		}
 		System.out.println("NOME: ");
 		String nome = sc.next().toUpperCase();	
 		sc.nextLine();
@@ -101,8 +126,8 @@ public class Main {
 		sc.nextLine();
 		System.out.println("QUANTIDADE: ");
 		int qtdProduto = sc.nextInt();
-		System.out.println("CÓDIGO DE BARRA: ");
-		String codBarra = sc.next().toUpperCase();
+			
+		
 		
 		while (true) {
 			System.out.println("SIGA AS INSTRUÇÕES REFERENTE AO TIPO DE CADASTRO:\nDIGITE 1 - PARA PRODUTO\nDIGITE 2 - PARA MEDICAMENTO");
@@ -142,6 +167,15 @@ public class Main {
 		}
 			
 	}
+	
+	private static boolean procurarCodBarra(String codBarra) {
+		for (Produto p: lista) {
+			if (p.getCodigoDeBarras().equals(codBarra)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	private static void remover(){
 		// TODO Auto-generated method stub
@@ -149,7 +183,31 @@ public class Main {
 	}
 	
 	private static void adicionarQtd() {
-		// TODO Auto-generated method stub
+		System.out.println("DIGITE O CODIGO DE BARRA: ");
+		String codBarra = sc.next().toUpperCase();
+		
+		boolean encontrado = procurarCodBarra(codBarra);
+		if (encontrado == true) {
+			for (Produto p: lista) {
+				if (p.getCodigoDeBarras().equals(codBarra)) {
+					try {
+						System.out.println("DIGITE A QUANTIDADE: ");
+						int qtdProduto = sc.nextInt();
+						p.setQuantidade(p.getQuantidade() + qtdProduto);
+						System.out.println("A QUANTIDADE DE " + p.getNome() + " FOI ATUALIZADA!\nTOTAL QUANTIDADE : " + p.getQuantidade());
+						
+						sc.nextLine();
+					} catch (Exception e) {
+						System.out.println("ENTRADA INVÁLIDA! TENTE REALIZAR ESSA FUNÇÃO DO INÍCIO!");
+						return;
+					}
+					
+				}
+			}
+		} else {
+			System.out.println("PRODUTO NÃO ENCONTRADO!\nCADASTRE O PRODUTO PRIMEIRO OU CONFIRA O CÓDIGO DE BARRA");
+			return;
+		}
 		
 	}
 
@@ -185,7 +243,7 @@ public class Main {
 		boolean inputValido = false;
         while (!inputValido) {
             try {
-                System.out.print("DIGITE UMA OPÇÃO: : ");
+                System.out.print("DIGITE UMA OPÇÃO: ");
                 opcao = sc.nextInt();
                 sc.nextLine();
 
