@@ -45,8 +45,6 @@ public class Main {
 			case 0:
 				System.out.println("ENCERRANDO SISTEMA");
 				System.exit(0);
-			default:
-				System.out.println("\nOPÇÃO NÃO ENCONTRADA! TENTE NOVAMENTE");
 			}
 		}
 	}
@@ -245,8 +243,16 @@ public class Main {
             try {
                 System.out.print("DIGITE UMA OPÇÃO: ");
                 opcao = sc.nextInt();
-                sc.nextLine();
-
+                sc.nextLine(); 
+                
+                if (opcao < 0) {
+                    try {
+                        throw new NumeroNegativo();
+                    } catch (NumeroNegativo e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+               
                 inputValido = true;
             } catch (InputMismatchException e) {
                 System.out.println("\nENTRADA INVÁLIDA! TENTE NOVAMENTE!");
