@@ -33,9 +33,12 @@ public class Main {
 				adicionarQtd();
 				break;
 			case 4:
-				listarTodos();
+				procurarProduto();
 				break;
 			case 5:
+				listarTodos();
+				break;
+			case 6:
 				faturamento();
 				break;
 			case 0:
@@ -214,6 +217,20 @@ public class Main {
 		}
 		
 	}
+	
+	
+	private static void procurarProduto() {
+		System.out.println("DIGITE O NOME DO PRODUTO: ");
+		String nomeP = sc.next().toUpperCase();
+		
+		for(Produto p: lista) {
+			if(p.getNome().equals(nomeP)) {
+				System.out.println(p.exibirInformacoes());
+			} else {
+				System.out.println("O PRODUTO NÃO CONSTA NO SISTEMA! ");
+			}
+		}
+	}
 
 	private static void listarTodos(){
 		if (lista.isEmpty()) {
@@ -242,8 +259,9 @@ public class Main {
 		System.out.println("1 - VENDER PRODUTO");
 		System.out.println("2 - CADASTRAR PRODUTO");
 		System.out.println("3 - ADICIONAR QUANTIDADES");
-		System.out.println("4 - LISTAR TODOS OS PRODUTOS");
-		System.out.println("5 - FATURAMENTO");
+		System.out.println("4 - PROCURAR PRODUTO");
+		System.out.println("5 - LISTAR TODOS OS PRODUTOS");
+		System.out.println("6 - FATURAMENTO");
 		System.out.println("0 - SAIR");
 		
 		boolean inputValido = false;
