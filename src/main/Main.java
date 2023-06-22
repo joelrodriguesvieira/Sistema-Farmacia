@@ -17,8 +17,6 @@ public class Main {
 	static String itensVendidos = "";
 	
 	public static void main(String[] args) {
-		Produto a = new ProdutoGeral("TESOURA",20,"2023-20-12",15,"121212");
-		lista.add(a);
 		while (true) {
 			opcao = menu();
 			
