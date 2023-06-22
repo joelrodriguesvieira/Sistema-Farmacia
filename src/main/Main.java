@@ -20,10 +20,6 @@ public class Main {
 		Produto a = new ProdutoGeral("TESOURA",20,"2023-20-12",15,"121212");
 		lista.add(a);
 		while (true) {
-//			Produto b = new ProdutoGeral("PAPEL",10,"2023-12-20",5,"54544");
-//			lista.add(b);
-//			Produto c = new Medicamento("AMOXILINA", 15,"2023-12-01",2,"565656","BACTERIA");
-//			lista.add(c);
 			opcao = menu();
 			
 			switch(opcao) {
@@ -45,6 +41,9 @@ public class Main {
 			case 0:
 				System.out.println("ENCERRANDO SISTEMA");
 				System.exit(0);
+			default:
+				System.out.println("OPÇÃO NÃO ENCONTRADA! TENTE NOVAMENTE");
+				break;
 			}
 		}
 	}
@@ -98,12 +97,21 @@ public class Main {
 	private static void cadastrar(){
 		System.out.println("CÓDIGO DE BARRA: ");
 		String codBarra = sc.next().toUpperCase();
+		
+		if (codBarra.length() != 13) {
+			try {
+				throw new CheckBarCode();
+			} catch (CheckBarCode e) {
+				System.out.println("ERRO! " + e.getMessage());
+				return;
+			}
+		}
 		boolean encontrado = procurarCodBarra(codBarra);
 		
 		if (encontrado) {
 			System.out.println("ESTE PRODUTO JÁ FOI CADASTRADO ANTERIOMENTE!");
 			while (true) {
-				System.out.println("DESEJA ADICIONAR APENAS ADICIONAR QUANTIDADES A ELE?\nDIGITE 1 PARA SIM\nDIGITE 2 PARA NÃO");
+				System.out.println("DESEJA ADICIONAR APENAS ADICIONAR QUANTIDADES A ELE?\nDIGITE 1 PARA SIM\nDIGITE 2 PARA NÃO\n: ");
 				String resposta = sc.next();
 				if (resposta.equals("1")) {
 					adicionarQtd();
@@ -112,7 +120,7 @@ public class Main {
 					System.out.println("ENCERRANDO CADASTRO!...");
 					return;
 				} else if ((!resposta.equals("1") && (!resposta.equals("2")))) {
-					System.out.println("\nENTRADA INVÁLIDA. DIGITE APENAS 1 OU 2.");
+					System.out.println("ENTRADA INVÁLIDA. DIGITE APENAS 1 OU 2.");
 				}
 			}
 			
@@ -131,7 +139,7 @@ public class Main {
 		
 		
 		while (true) {
-			System.out.println("SIGA AS INSTRUÇÕES REFERENTE AO TIPO DE CADASTRO:\nDIGITE 1 - PARA PRODUTO\nDIGITE 2 - PARA MEDICAMENTO");
+			System.out.println("SIGA AS INSTRUÇÕES REFERENTE AO TIPO DE CADASTRO:\nDIGITE 1 - PARA PRODUTO\nDIGITE 2 - PARA MEDICAMENTO\n:");
 			String ask = sc.next();
 			
 			if (ask.equals("1")) {
@@ -143,7 +151,7 @@ public class Main {
 				System.out.println("PRINCÍPIO ATIVO DO REMÉDIO: ");
 				String principio = sc.next().toUpperCase();
 				
-				System.out.println("SIGA AS INSTRUÇÕES REFERENTE AO TIPO DE MEDICAMENTO:\nDIGITE 1 - MEDICAMENTO SEM RECEITA\nDIGITE 2 - MEDICAMENTO COM RECEITA");
+				System.out.println("SIGA AS INSTRUÇÕES REFERENTE AO TIPO DE MEDICAMENTO:\nDIGITE 1 - MEDICAMENTO SEM RECEITA\nDIGITE 2 - MEDICAMENTO COM RECEITA\n: ");
 				String resposta = sc.next();
 				while (true) {
 					if (resposta.equals("1")) {
@@ -159,11 +167,11 @@ public class Main {
 						System.out.println("MEDICAMENTO CADASTRADO!");
 						return;
 					} else if ((!resposta.equals("1")) && (!resposta.equals("2"))) {
-						System.out.println("\nENTRADA INVÁLIDA. DIGITE APENAS 1 OU 2.");
+						System.out.println("ENTRADA INVÁLIDA. DIGITE APENAS 1 OU 2.");
 					}
 				}
 			} else if ((!ask.equals("1")) && (!ask.equals("2"))) {
-				System.out.println("\nENTRADA INVÁLIDA. DIGITE APENAS 1 OU 2.");
+				System.out.println("ENTRADA INVÁLIDA. DIGITE APENAS 1 OU 2.");
 			}
 		}
 			
@@ -244,14 +252,6 @@ public class Main {
                 System.out.print("DIGITE UMA OPÇÃO: ");
                 opcao = sc.nextInt();
                 sc.nextLine(); 
-                
-                if (opcao < 0) {
-                    try {
-                        throw new NumeroNegativo();
-                    } catch (NumeroNegativo e) {
-                        System.out.println(e.getMessage());
-                    }
-                }
                
                 inputValido = true;
             } catch (InputMismatchException e) {
